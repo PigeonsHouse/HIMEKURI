@@ -1,0 +1,134 @@
+.window-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #f3f3f3;
+  font-family: 'Noto Serif JP', serif;
+}
+
+.main-container {
+  width: 100vw;
+  max-width: 800px;
+  background-color: white;
+  margin-top: 40px;
+  height: 120vw;
+  max-height: calc(100% - 40px);
+  font-weight: bold;
+  position: relative;
+}
+
+.secondary-info {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2%;
+}
+
+.tertiary-info {
+  position: absolute;
+  bottom: 0;
+  border-top: 1px solid #2A4680;
+  height: 50px;
+  margin: 0 2%;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: 450px) {
+  .secondary-info {
+    padding: 0 5%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .tertiary-info {
+    margin: 0 5%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+.year-and-japanese-month, .month, .japanese-year {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.year {
+  font-size: 24px;
+  line-height: 90%;
+}
+
+.japanese-month {
+  font-size: 16px;
+  line-height: 90%;
+  color: #2A4680;
+}
+
+.month {
+  flex-direction: row;
+  font-size: 25px;
+}
+
+.month span {
+  font-size: 40px;
+}
+
+.reiwa-year {
+  font-size: 20px;
+  line-height: 80%;
+  letter-spacing: 0.5em;
+}
+
+.old-japanese-year {
+  letter-spacing: -0.05em;
+}
+
+.primary-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans JP', sans-serif;
+  flex-direction: column;
+  padding-top: min(8vw, 64px);
+  gap: 20px;
+  height: calc(100% - 100px - min(8vw, 64px));
+}
+
+@media screen and (min-width: 450px) {
+  .primary-info {
+    height: calc(100% - 180px - min(8vw, 64px));
+  }
+}
+
+.date {
+  transform: scale(1, 1.3);
+  font-size: min(60vw, 500px);
+  line-height: 90%;
+}
+
+.day-of-week {
+  font-size: min(12vw, 96px);
+  transform: scale(1.4, 1);
+  line-height: 80%;
+}
+
+.header {
+  position: absolute;
+  height: 40px;
+  width: 100vw;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+  font-size: 20px;
+  font-weight: bold;
+}
