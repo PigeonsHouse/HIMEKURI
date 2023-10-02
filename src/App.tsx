@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./App.css"
 
 const DATE_KEY = "calendarDate";
@@ -28,6 +28,7 @@ const DAY_OF_WEEK_STRING = [
 const REIWA_OFFSET = 2018;
 const HEISEI_OFFSET = 1988;
 const SHOWA_OFFSET = 1925;
+const MILLISECOND_OF_ONE_DAY = 1000 * 60 * 60 * 24;
 
 type CalendarCardProps = Readonly<{
   calendarDate: Date,
@@ -38,8 +39,17 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
   calendarDate,
   onClick,
 }) => {
-
-  console.log(calendarDate)
+  const primaryInfo = useMemo(() => {
+    const className = "primary-info";
+    switch (calendarDate.getDay()) {
+      case 6:
+        return `${className} saturday`;
+      case 0:
+        return `${className} sunday`;
+      default:
+        return className;
+    }
+  }, [calendarDate]);
 
   return (
     <div className="main-container" onClick={onClick}>
@@ -54,7 +64,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
           <div className="old-japanese-year">平{calendarDate.getFullYear()-HEISEI_OFFSET}年･昭{calendarDate.getFullYear()-SHOWA_OFFSET}年</div>
         </div>
       </div>
-      <div className="primary-info">
+      <div className={primaryInfo}>
         <div className="date">
           {calendarDate.getDate()}
         </div>
@@ -83,9 +93,9 @@ const App = () => {
   }, []);
 
   const onClick = useCallback(() => {
-    const date = calendarDate;
-    date.setDate(date.getDate() + 1);
+    const date = new Date(calendarDate.getTime() + MILLISECOND_OF_ONE_DAY);
     setCalendarDate(date);
+    localStorage.setItem(DATE_KEY, date.getTime().toString())
   }, [calendarDate, setCalendarDate]);
 
   return (
