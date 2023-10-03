@@ -111,6 +111,7 @@
   -ms-writing-mode: tb-rl;
   writing-mode: vertical-rl;
   font-size: min(9vw, 72px);
+  color: #ED3218;
 }
 
 .saturday {

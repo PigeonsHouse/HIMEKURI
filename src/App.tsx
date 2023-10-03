@@ -12,6 +12,9 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
   calendarDate,
   onClick,
 }) => {
+  const holidayInfo = useMemo(() => {
+    return getHoliday(calendarDate);
+  }, [calendarDate]);
   const primaryInfo = useMemo(() => {
     const className = "primary-info";
     switch (calendarDate.getDay()) {
@@ -20,13 +23,12 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
       case 0:
         return `${className} sunday`;
       default:
+        if (holidayInfo) {
+          return `${className} sunday`;
+        }
         return className;
     }
-  }, [calendarDate]);
-
-  const holidayInfo = useMemo(() => {
-    return getHoliday(calendarDate);
-  }, [calendarDate]);
+  }, [calendarDate, holidayInfo]);
 
   return (
     <div className="main-container" onClick={onClick}>
@@ -53,11 +55,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
             <div className="holiday">
               {holidayInfo.name}
             </div>
-          ) : (
-            <div className="holiday">
-              平日
-            </div>
-          )
+          ) : null
         }
       </div>
       <div className="tertiary-info">制作：鳩屋敷</div>
