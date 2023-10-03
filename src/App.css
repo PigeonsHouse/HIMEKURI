@@ -38,6 +38,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  font-size: clamp(15px, 5vw, 30px);
+}
+
+.tertiary-info a {
+  color: black;
+}
+
+.credit {
+  font-size: 12px;
 }
 
 @media screen and (min-width: 450px) {

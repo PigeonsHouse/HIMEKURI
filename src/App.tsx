@@ -69,7 +69,10 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
           ) : null
         }
       </div>
-      <div className="tertiary-info">{jikkan} {junishi}</div>
+      <div className="tertiary-info">
+        <div>{jikkan} {junishi}</div>
+        <div className="credit">制作：<a href="https://twitter.com/PigeonsHouse">鳩屋敷</a></div>
+      </div>
     </div>
   )
 }
