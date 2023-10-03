@@ -4,11 +4,13 @@ import { DATE_KEY, DAY_OF_WEEK_STRING, HEISEI_OFFSET, JAPANESE_MONTH, JIKKAN, JU
 import { getHoliday } from "./holiday";
 
 type CalendarCardProps = Readonly<{
+  className?: string;
   calendarDate: Date,
   onClick?: () => void;
 }>
 
 const CalendarCard: React.FC<CalendarCardProps> = ({
+  className,
   calendarDate,
   onClick,
 }) => {
@@ -41,8 +43,14 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     return JUNISHI[junisiIndex];
   }, [rokujikkanshiIndex]);
 
+  const onClickCalendar = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (onClick === undefined) return;
+    if ((e.target as HTMLElement).tagName === 'A') return;
+    onClick();
+  }, [onClick]);
+
   return (
-    <div className="main-container" onClick={onClick}>
+    <div className={`card-parent ${className}`} onClick={onClickCalendar}>
       <div className="secondary-info">
         <div className="year-and-japanese-month">
           <div className="year">{calendarDate.getFullYear()}</div>
@@ -79,6 +87,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
 
 const App = () => {
   const [calendarDate, setCalendarDate] = useState<Date>(new Date());
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   
   // initialize date
   useEffect(() => {
@@ -92,16 +101,33 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!isLoading) return;
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, [isLoading]);
+
   const onClick = useCallback(() => {
+    if (isLoading) return;
+    setIsLoading(true);
+
     const date = new Date(calendarDate.getTime() + MILLISECOND_OF_ONE_DAY);
     setCalendarDate(date);
     localStorage.setItem(DATE_KEY, date.getTime().toString())
-  }, [calendarDate, setCalendarDate]);
+  }, [isLoading, calendarDate, setCalendarDate]);
 
   return (
     <div className="window-wrapper">
-      <CalendarCard calendarDate={calendarDate} onClick={onClick}/>
-      <div className="header">HIMEKURI CALENDAR</div>
+      <div className="main-container">
+        <CalendarCard calendarDate={calendarDate} onClick={onClick}/>
+        {
+          isLoading ? (
+            <CalendarCard className="fade-out" calendarDate={new Date(calendarDate.valueOf() - MILLISECOND_OF_ONE_DAY)} />
+          ) : null
+        }
+        <div className="header">HIMEKURI CALENDAR</div>
+      </div>
     </div>
   );
 }
