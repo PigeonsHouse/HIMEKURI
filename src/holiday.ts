@@ -137,7 +137,6 @@ const _getHoliday = (targetDate: Date) => {
 
 export const getHoliday = (targetDate: Date) => {
     const holidayInfo = _getHoliday(targetDate);
-    console.log(targetDate)
     if (holidayInfo) {
         return holidayInfo;
     } else if (targetDate.getDay() === 0) {
