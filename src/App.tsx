@@ -1,34 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./App.css"
-
-const DATE_KEY = "calendarDate";
-const JAPANESE_MONTH = [
-  "睦月",
-  "如月",
-  "弥生",
-  "卯月",
-  "皐月",
-  "水無月",
-  "文月",
-  "葉月",
-  "長月",
-  "神無月",
-  "霜月",
-  "師走",
-];
-const DAY_OF_WEEK_STRING = [
-  "日",
-  "月",
-  "火",
-  "水",
-  "木",
-  "金",
-  "土"
-];
-const REIWA_OFFSET = 2018;
-const HEISEI_OFFSET = 1988;
-const SHOWA_OFFSET = 1925;
-const MILLISECOND_OF_ONE_DAY = 1000 * 60 * 60 * 24;
+import { DATE_KEY, DAY_OF_WEEK_STRING, HEISEI_OFFSET, JAPANESE_MONTH, MILLISECOND_OF_ONE_DAY, REIWA_OFFSET, SHOWA_OFFSET } from "./constants";
+import { getHoliday } from "./holiday";
 
 type CalendarCardProps = Readonly<{
   calendarDate: Date,
@@ -51,6 +24,10 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
     }
   }, [calendarDate]);
 
+  const holidayInfo = useMemo(() => {
+    return getHoliday(calendarDate);
+  }, [calendarDate]);
+
   return (
     <div className="main-container" onClick={onClick}>
       <div className="secondary-info">
@@ -71,6 +48,17 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
         <div className="day-of-week">
           {DAY_OF_WEEK_STRING[calendarDate.getDay()]}曜
         </div>
+        {
+          holidayInfo !== null ? (
+            <div className="holiday">
+              {holidayInfo.name}
+            </div>
+          ) : (
+            <div className="holiday">
+              平日
+            </div>
+          )
+        }
       </div>
       <div className="tertiary-info">制作：鳩屋敷</div>
     </div>
