@@ -105,7 +105,7 @@ const holidayInfo: HolidayInfoType = {
 };
 
 const getWeekNumber = (targetDate: Date) => {
-    return Math.floor(targetDate.getDate() / 7)+1
+    return Math.ceil(targetDate.getDate() / 7);
 }
 
 const _getHoliday = (targetDate: Date) => {
