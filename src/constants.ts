@@ -22,6 +22,32 @@ export const DAY_OF_WEEK_STRING = [
   "金",
   "土"
 ];
+export const JIKKAN = [
+  "きのえ",
+  "きのと",
+  "ひのえ",
+  "ひのと",
+  "つちのえ",
+  "つちのと",
+  "かのえ",
+  "かのと",
+  "みずのえ",
+  "みずのと",
+];
+export const JUNISHI = [
+  "ね",
+  "うし",
+  "とら",
+  "う",
+  "たつ",
+  "み",
+  "うま",
+  "ひつじ",
+  "さる",
+  "とり",
+  "いぬ",
+  "い",
+];
 export const REIWA_OFFSET = 2018;
 export const HEISEI_OFFSET = 1988;
 export const SHOWA_OFFSET = 1925;

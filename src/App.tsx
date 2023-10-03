@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./App.css"
-import { DATE_KEY, DAY_OF_WEEK_STRING, HEISEI_OFFSET, JAPANESE_MONTH, MILLISECOND_OF_ONE_DAY, REIWA_OFFSET, SHOWA_OFFSET } from "./constants";
+import { DATE_KEY, DAY_OF_WEEK_STRING, HEISEI_OFFSET, JAPANESE_MONTH, JIKKAN, JUNISHI, MILLISECOND_OF_ONE_DAY, REIWA_OFFSET, SHOWA_OFFSET } from "./constants";
 import { getHoliday } from "./holiday";
 
 type CalendarCardProps = Readonly<{
@@ -29,6 +29,17 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
         return className;
     }
   }, [calendarDate, holidayInfo]);
+  const rokujikkanshiIndex = useMemo(() => {
+    return (Math.floor((calendarDate.valueOf() + 1000*3600*9) / MILLISECOND_OF_ONE_DAY)+17) % 60;
+  }, [calendarDate]);
+  const jikkan = useMemo(() => {
+    const jikkanIndex = rokujikkanshiIndex % 10;
+    return JIKKAN[jikkanIndex];
+  }, [rokujikkanshiIndex]);
+  const junishi = useMemo(() => {
+    const junisiIndex = rokujikkanshiIndex % 12;
+    return JUNISHI[junisiIndex];
+  }, [rokujikkanshiIndex]);
 
   return (
     <div className="main-container" onClick={onClick}>
@@ -58,7 +69,7 @@ const CalendarCard: React.FC<CalendarCardProps> = ({
           ) : null
         }
       </div>
-      <div className="tertiary-info">制作：鳩屋敷</div>
+      <div className="tertiary-info">{jikkan} {junishi}</div>
     </div>
   )
 }
